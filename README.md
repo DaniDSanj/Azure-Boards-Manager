@@ -256,10 +256,9 @@ Para realizar una configuración personalizada y aprovechar al máximo las funci
 ## Próximos Pasos
 
 En las próximas iteraciones de este proyecto, se prevé trabajar sobre las siguientes áreas:
+- Ampliar las salidas a más formatos, no solo SQL Server y JSON.
 - Módulo de tests unitarios (ya incorporado en los requerimientos).
-- Mejora del encapsulamiento del código en clases.
-- Refinamiento del código a nivel general.
-- Automatización mediante el Programador de Tareas de Windows.
+- Mejora del encapsulamiento del código en clases y refinamiento del código a nivel general.
 
 ## `main.py` — Orquestación del proceso completo
 
