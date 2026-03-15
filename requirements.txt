@@ -1,0 +1,28 @@
+# Azure DevOps SDK
+azure-devops==7.1.0b4
+msrest==0.7.1
+
+# Configuración del entorno virtual
+python-dotenv==1.0.1
+
+# Credenciales de ejecución
+cryptography==46.0.5
+keyring==25.7.0
+
+# Métricas para logging (CPU y RAM)
+psutil==7.2.2
+
+# Cargas de datos largas (barra de progreso)
+tqdm==4.67.3
+
+# Conexión con SQL Server
+SQLAlchemy==2.0.46
+pyodbc==5.3.0
+
+# Transformación y calidad del dato
+beautifulsoup4==4.14.3
+numpy==2.4.2
+pandas==3.0.1
+
+# Tests
+pytest==9.0.2
