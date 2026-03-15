@@ -1,0 +1,80 @@
+# =============================================================================
+# Azure Boards Manager — GitHub Actions CI
+# =============================================================================
+# Este workflow se ejecuta automáticamente en GitHub cada vez que se hace
+# un push o Pull Request sobre las ramas main o dev.
+#
+# Qué comprueba:
+#   1. Que el código Python no tiene errores de sintaxis
+#   2. Que todas las dependencias del requirements.txt se instalan correctamente
+#   3. Que los imports principales del proyecto son correctos
+#
+# NO ejecuta el proceso completo (requeriría credenciales reales de Azure
+# y SQL Server). Su objetivo es detectar errores básicos antes de que
+# lleguen a la rama main.
+# =============================================================================
+
+name: CI — Validación de código
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  validar-codigo:
+    name: Validar sintaxis y dependencias
+    runs-on: windows-latest  # Windows para máxima compatibilidad con el proyecto
+
+    steps:
+
+      # 1. Descargar el código del repositorio
+      - name: Checkout del repositorio
+        uses: actions/checkout@v6
+
+      # 2. Instalar uv (gestor de paquetes moderno)
+      - name: Instalar uv
+        uses: astral-sh/setup-uv@v7
+
+      # 3. Instalar Python 3.14 con uv
+      - name: Instalar Python 3.14
+        run: uv python install 3.14
+
+      # 4. Crear el entorno virtual e instalar dependencias
+      #    Replica exactamente lo que hace instalar.bat en local:
+      #    un .venv dentro de la carpeta del proyecto con todas las librerias.
+      - name: Crear entorno virtual e instalar dependencias
+        run: |
+          uv venv --python 3.14 .venv
+          uv pip install -r requirements.txt --python .venv\Scripts\python.exe
+
+      # 5. Comprobar sintaxis Python en todos los ficheros .py
+      #    Usa el python del .venv para ser consistente con los pasos anteriores.
+      - name: Comprobar sintaxis Python
+        run: |
+          .venv\Scripts\python.exe -m py_compile main.py
+          Get-ChildItem -Recurse -Filter "*.py" | ForEach-Object {
+            .venv\Scripts\python.exe -m py_compile $_.FullName
+          }
+        shell: pwsh
+
+      # 6. Verificar que los modulos principales son importables
+      #    Usa el python del .venv donde estan instaladas las dependencias.
+      - name: Verificar imports de modulos
+        run: |
+          .venv\Scripts\python.exe -c "from modules.utils.logger import get_logger; print('logger OK')"
+          .venv\Scripts\python.exe -c "from modules.utils.config import AppConfig; print('config OK')"
+          .venv\Scripts\python.exe -c "from modules.pipeline.transformer import WorkItemTransformer; print('transformer OK')"
+          .venv\Scripts\python.exe -c "from modules.sql import LoadStrategy; print('sql OK')"
+        shell: pwsh
+        env:
+          # Variables minimas para que los imports no fallen por variables faltantes
+          AZURE_DEVOPS_ORG_URL: "https://dev.azure.com/placeholder"
+          AZURE_DEVOPS_PROJECT: "placeholder"
+          SQL_SERVER: "placeholder"
+          SQL_DATABASE: "placeholder"
