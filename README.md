@@ -1,3 +1,4 @@
+![Social Preview](https://github.com/DaniDSanj/Azure-Boards-Manager/blob/dev/social_preview.png?raw=true)
 # Azure Boards Manager
 Pipeline de datos en Python para la extracción, transformación y carga de tarjetas (work items) desde **Azure DevOps Boards** hacia **SQL Server** con el objetivo de realizar análisis avanzados uniendo la gestión de proyectos en Azure con datos de negocio ya almacenados en SQL Server. Este trabajo ha sido desarrollado con ayuda de [Claude](https://claude.ai/). Para dudas y sugerencias, puedes ponerte en contacto conmigo a través de [Github](https://github.com/DaniDSanj) y [LinkedIn](https://www.linkedin.com/in/danidsanj/).
 
