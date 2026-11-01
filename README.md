@@ -2,6 +2,8 @@
 # Azure Boards Manager
 Pipeline de datos en Python para la extracción, transformación y carga de tarjetas (work items) desde **Azure DevOps Boards** hacia **SQL Server** con el objetivo de realizar análisis avanzados uniendo la gestión de proyectos en Azure con datos de negocio ya almacenados en SQL Server. Este trabajo ha sido desarrollado con ayuda de [Claude](https://claude.ai/). Para dudas y sugerencias, puedes ponerte en contacto conmigo a través de [Github](https://github.com/DaniDSanj) y [LinkedIn](https://www.linkedin.com/in/danidsanj/).
 
+*Python pipeline that loads Azure DevOps Boards work items, with their full hierarchy, into SQL Server. A stored procedure then applies the business logic, so project tracking can be analysed alongside business data. Documentation is in Spanish.*
+
 El proceso extrae de forma automática todas las tarjetas de un proyecto de Azure Boards a partir de uno o varios IDs raíz, recorre su jerarquía completa (Epic → Feature → User Story → Task...), transforma y limpia los datos y los carga en SQL Server. Tras la carga, ejecuta un procedimiento almacenado que aplica la lógica de negocio requerida y deja los datos listos para su análisis. Todo el proceso queda registrado en un fichero `.log` local y en una tabla de logs en SQL Server, con métricas de CPU, RAM e identificador único de ejecución.
 
 ## Índice
